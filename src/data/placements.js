@@ -1,0 +1,43 @@
+// src/data/placements.js
+const companies = [
+  { name: "Accenture", logo: "/images/logos/accenture.png" },
+  { name: "Capgemini", logo: "/images/logos/capgemini.png" },
+  { name: "Cognizant", logo: "/images/logos/cognizant.png" },
+  { name: "Honeywell", logo: "/images/logos/honeywell.png" },
+  { name: "IBM", logo: "/images/logos/ibm.png" },
+  { name: "Zoho", logo: "/images/logos/zoho.png" },
+  { name: "Microsoft", logo: "/images/logos/microsoft.png" },
+  { name: "Amazon", logo: "/images/logos/amazon.png" },
+  { name: "Apple", logo: "/images/logos/apple.png" },
+  { name: "Ai", logo: "/images/logos/ai.png" },
+  { name: "Accesshealth", logo: "/images/logos/accesshealthcare.png" },
+  { name: "Alorica", logo: "/images/logos/alorica.png" },
+  { name: "Avasoft", logo: "/images/logos/avasoft.png" },
+
+  // Newly added logos
+  { name: "CGI", logo: "/images/logos/cgi.png" },
+  { name: "Concentrix", logo: "/images/logos/concentrix.png" },
+  { name: "Contus", logo: "/images/logos/contus.png" },
+  { name: "Deloitte", logo: "/images/logos/deloitte.png" },
+  { name: "Enphase", logo: "/images/logos/enphase.png" },
+  { name: "EY", logo: "/images/logos/ey.png" },
+  { name: "Facebook", logo: "/images/logos/facebook.png" },
+  { name: "Flipkart", logo: "/images/logos/flipkart.png" },
+  { name: "Genpact", logo: "/images/logos/genpact.png" },
+  { name: "HCL", logo: "/images/logos/hcl.png" },
+  { name: "Innova", logo: "/images/logos/innova.png" },
+  { name: "IntouchCX", logo: "/images/logos/intouchcx.png" },
+  { name: "Kyndryl", logo: "/images/logos/kyndryl.png" },
+  { name: "L&T", logo: "/images/logos/l_and_t.png" },
+  { name: "Movate", logo: "/images/logos/movate.png" },
+  { name: "NTT Data", logo: "/images/logos/ntt_data.png" },
+  { name: "Qualcomm", logo: "/images/logos/qualcomm.png" },
+  { name: "Sutherland", logo: "/images/logos/sutherland.png" },
+  { name: "TCS", logo: "/images/logos/tcs.png" },
+  { name: "Tech Mahindra", logo: "/images/logos/tech_mahindra.png" },
+  { name: "Virtusa", logo: "/images/logos/virtusa.png" },
+  { name: "Wipro", logo: "/images/logos/wipro.png" },
+  { name: "Infosys", logo: "/images/logos/infosys.png" },
+];
+
+export default companies;

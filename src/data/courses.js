@@ -1,0 +1,40 @@
+import {
+  Code,
+  Database,
+  LineChart,
+  Globe,
+  Brain,
+  Layers,
+  Settings,
+  Cpu,
+  FileSpreadsheet,
+  Laptop,
+  ChartBar,
+  BarChartBig,
+  Webhook,
+  PenTool,
+  Component,
+} from "lucide-react";
+
+const courses = [
+  { title: "MS Office", icon: <FileSpreadsheet />, category: "Productivity" },
+  { title: "Power BI", icon: <BarChartBig />, category: "Data Analytics" },
+  { title: "C", icon: <Code />, category: "Programming" },
+  { title: "C++", icon: <Code />, category: "Programming" },
+  { title: "Java", icon: <Code />, category: "Programming" },
+  { title: "Python", icon: <Brain />, category: "Programming" },
+  { title: "SQL", icon: <Database />, category: "Data Science" },
+  { title: "HTML, CSS, JS, React", icon: <Globe />, category: "Web Development" },
+  { title: "PHP, WordPress", icon: <Webhook />, category: "Web Development" },
+  { title: "Testing & Automation", icon: <Settings />, category: "QA/Automation" },
+  { title: "Digital Marketing", icon: <LineChart />, category: "Marketing" },
+  { title: "Data Analytics & Data Science", icon: <ChartBar />, category: "Data Science" },
+  { title: "AI & ML", icon: <Brain />, category: "AI/ML" },
+  { title: "Embedded Systems & VLSI", icon: <Cpu />, category: "Electronics" },
+  { title: "AutoCAD", icon: <PenTool />, category: "Design" },
+  { title: "Full Stack Development", icon: <Layers />, category: "Web Development" },
+  { title: "SAP", icon: <Component />, category: "ERP" },
+  { title: "Microsoft Dynamics", icon: <Laptop />, category: "ERP" },
+];
+
+export default courses;
