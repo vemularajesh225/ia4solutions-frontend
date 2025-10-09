@@ -89,7 +89,7 @@ const ContactForm = () => {
       {/* Header */}
       <div className="text-center mb-6">
         <p className="text-gray-600 dark:text-gray-400 text-sm">
-          Fill out your details and we’ll get back within 24 hours.
+          Fill out your details and we’ll get back you shortly.
         </p>
       </div>
 
