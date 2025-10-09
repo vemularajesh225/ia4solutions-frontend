@@ -276,17 +276,18 @@ const Home = () => {
         </motion.div>
 
         {/* Carousel Wrapper */}
-        <div className="relative max-w-5xl mx-auto flex justify-center items-center min-h-[320px] z-10 px-4 sm:px-6">
+        <div className="relative max-w-5xl mx-auto flex justify-center items-center min-h-[400px] sm:min-h-[420px] md:min-h-[380px] z-10 px-2 sm:px-4">
           {testimonials.map((t, i) => (
             <motion.div
               key={i}
-              className={`absolute inset-0 transition-opacity duration-1000 flex justify-center items-center
-          ${i === currentTestimonial ? "opacity-100 z-10" : "opacity-0 z-0"}`}
+              className={`absolute inset-0 flex justify-center items-center transition-all duration-1000
+      ${i === currentTestimonial ? "opacity-100 z-10" : "opacity-0 z-0"}`}
             >
               <TestimonialCard {...t} layout="horizontal" />
             </motion.div>
           ))}
         </div>
+
 
         {/* Gradient Overlay at Bottom */}
         <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-50 dark:from-gray-900 to-transparent pointer-events-none"></div>

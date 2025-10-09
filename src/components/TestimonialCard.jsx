@@ -13,33 +13,33 @@ const TestimonialCard = ({
   return (
     <motion.div
       className={`relative overflow-hidden
-        bg-gradient-to-br from-white/90 to-gray-50/80 dark:from-gray-800/70 dark:to-gray-700/50
-        backdrop-blur-md border border-gray-100 dark:border-gray-600 shadow-md
-        hover:shadow-xl hover:border-blue-500
-        transition-all duration-500 ease-in-out
-        p-6 md:p-7 rounded-xl
-        w-full max-w-3xl
-        ${layout === "horizontal"
+    bg-gradient-to-br from-white/90 to-gray-50/80 dark:from-gray-800/70 dark:to-gray-700/50
+    backdrop-blur-md border border-gray-100 dark:border-gray-600 shadow-md
+    hover:shadow-xl hover:border-blue-500
+    transition-all duration-500 ease-in-out
+    p-6 sm:p-6 md:p-7 rounded-xl
+    w-full max-w-full sm:max-w-2xl md:max-w-3xl
+    ${layout === "horizontal"
           ? "flex flex-col md:flex-row items-center gap-6 md:gap-8"
           : "flex flex-col items-center text-center gap-5"} ${className}`}
-      whileHover={{ scale: 1.03 }}
-      transition={{ type: "spring", stiffness: 300 }}
+      whileHover={{ scale: 1.02 }}
+      transition={{ type: "spring", stiffness: 250 }}
     >
+
       {/* Image / Avatar */}
       <div className="flex-shrink-0 z-10">
         {image ? (
           <motion.div
-            className={`w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-sky-500 shadow-lg`}
+            className="w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-sky-500 shadow-lg mx-auto md:mx-0"
             whileHover={{ scale: 1.08 }}
-            style={{ flexShrink: 0 }}
           >
             <img
               src={image}
               alt={name}
               className="w-full h-full object-cover"
-              style={{ imageRendering: "auto" }}
             />
           </motion.div>
+
         ) : (
           <div
             className={`w-32 h-32 md:w-36 md:h-36 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600 flex items-center justify-center shadow-md`}
@@ -59,7 +59,9 @@ const TestimonialCard = ({
           ${layout === "horizontal" ? "text-center md:text-left" : "text-center"}`}
       >
         {/* Review */}
-        <p className="text-gray-700 dark:text-gray-300 italic text-base text-center md:text-lg leading-relaxed mb-3 md:mb-4 mt-6 relative z-10">
+        <p className="text-gray-700 dark:text-gray-300 italic text-sm sm:text-base md:text-lg 
+  text-center md:text-left leading-relaxed mb-3 md:mb-4 mt-4 md:mt-6 
+  relative z-10 break-words">
           “{review}”
         </p>
 
