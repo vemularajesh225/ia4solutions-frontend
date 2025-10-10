@@ -1,5 +1,4 @@
 // src/components/ContactForm.jsx
-import { API_BASE_URL } from "../config";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -9,6 +8,11 @@ import {
   FaCommentDots,
   FaUserTag,
 } from "react-icons/fa";
+import emailjs from "@emailjs/browser"; // install via npm i @emailjs/browser
+
+const SERVICE_ID = "service_5bee66f";      // your EmailJS service ID
+const TEMPLATE_ID = "template_149eqb8";    // your EmailJS template ID
+const PUBLIC_KEY = "5CjlwRVD1_PiEUBil";      // your EmailJS public key
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -18,6 +22,7 @@ const ContactForm = () => {
     userType: "Student",
     message: "",
   });
+
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -42,31 +47,23 @@ const ContactForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
+
     setStatus("Sending...");
     try {
-      const res = await fetch(`${API_BASE_URL}/api/contact`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
-
-      const data = await res.json();
-      if (data.success) {
-        setSubmitted(true);
-        setStatus("✅ Message sent successfully!");
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          userType: "Student",
-          message: "",
-        });
-        setTimeout(() => setSubmitted(false), 4000);
-      } else {
-        setStatus("❌ Failed to send message.");
-      }
-    } catch {
-      setStatus("⚠️ Server error. Please try again.");
+      await emailjs.send(SERVICE_ID, TEMPLATE_ID, formData, PUBLIC_KEY);
+      setStatus("✅ Message sent successfully!");
+      setSubmitted(true);
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        userType: "Student",
+        message: "",
+      });
+      setTimeout(() => setSubmitted(false), 4000);
+    } catch (error) {
+      console.error("EmailJS Error:", error);
+      setStatus("⚠️ Failed to send message. Try again later.");
     }
   };
 
@@ -86,19 +83,16 @@ const ContactForm = () => {
         borderImage: "linear-gradient(135deg, #2563eb, #7c3aed, #0ea5e9) 1",
       }}
     >
-      {/* Header */}
       <div className="text-center mb-6">
         <p className="text-gray-600 dark:text-gray-400 text-sm">
-          Fill out your details and we’ll get back you shortly.
+          Fill out your details and we’ll get back to you shortly.
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {fields.map((field) => (
           <div key={field.name} className="relative group">
-            <span className="absolute left-3 top-3 text-blue-500 text-lg group-focus-within:text-blue-600 transition-all">
-              {field.icon}
-            </span>
+            <span className="absolute left-3 top-3 text-blue-500 text-lg">{field.icon}</span>
             <input
               type={field.type}
               name={field.name}
@@ -106,22 +100,19 @@ const ContactForm = () => {
               onChange={handleChange}
               placeholder={field.placeholder}
               required
-              className="w-full pl-10 pr-3 py-3 bg-white/60 dark:bg-gray-800/60 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-gray-800 dark:text-gray-200 placeholder-gray-400"
+              className="w-full pl-10 pr-3 py-3 bg-white/60 dark:bg-gray-800/60 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-gray-800 dark:text-gray-200 placeholder-gray-400"
             />
-            {errors[field.name] && (
-              <p className="text-red-500 text-xs mt-1">{errors[field.name]}</p>
-            )}
+            {errors[field.name] && <p className="text-red-500 text-xs mt-1">{errors[field.name]}</p>}
           </div>
         ))}
 
-        {/* User Type */}
         <div className="relative">
           <FaUserTag className="absolute left-3 top-3 text-blue-500 text-lg" />
           <select
             name="userType"
             value={formData.userType}
             onChange={handleChange}
-            className="w-full pl-10 pr-3 py-3 bg-white/60 dark:bg-gray-800/60 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-800 dark:text-gray-200"
+            className="w-full pl-10 pr-3 py-3 bg-white/60 dark:bg-gray-800/60 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-gray-800 dark:text-gray-200"
           >
             <option value="Student">Student</option>
             <option value="Professional">Professional</option>
@@ -129,7 +120,6 @@ const ContactForm = () => {
           </select>
         </div>
 
-        {/* Message */}
         <div className="relative">
           <FaCommentDots className="absolute left-3 top-3 text-blue-500 text-lg" />
           <textarea
@@ -139,44 +129,35 @@ const ContactForm = () => {
             onChange={handleChange}
             placeholder="Write your message..."
             required
-            className="w-full pl-10 pr-3 py-3 bg-white/60 dark:bg-gray-800/60 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none text-gray-800 dark:text-gray-200 placeholder-gray-400"
+            className="w-full pl-10 pr-3 py-3 bg-white/60 dark:bg-gray-800/60 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none resize-none text-gray-800 dark:text-gray-200 placeholder-gray-400"
           ></textarea>
-          {errors.message && (
-            <p className="text-red-500 text-xs mt-1">{errors.message}</p>
-          )}
+          {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
         </div>
 
-        {/* Submit Button */}
         <motion.button
-          whileHover={{
-            scale: 1.05,
-            boxShadow: "0px 0px 15px rgba(59,130,246,0.5)",
-          }}
+          whileHover={{ scale: 1.05, boxShadow: "0px 0px 15px rgba(59,130,246,0.5)" }}
           whileTap={{ scale: 0.97 }}
           type="submit"
           disabled={submitted}
-          className="relative w-full py-3 font-semibold text-white rounded-lg overflow-hidden group bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-indigo-600 hover:to-blue-600 shadow-lg transition-all"
+          className="relative w-full py-3 font-semibold text-white rounded-lg bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-indigo-600 hover:to-blue-600 shadow-lg transition-all"
         >
-          <span className="relative z-10">
-            {submitted ? "Message Sent ✅" : "Send Message"}
-          </span>
-          <span className="absolute inset-0 bg-gradient-to-r from-indigo-400 to-blue-400 opacity-0 group-hover:opacity-20 transition-all" />
+          {submitted ? "Message Sent ✅" : "Send Message"}
         </motion.button>
       </form>
 
-      {/* Status */}
       {status && (
         <motion.p
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          className={`mt-5 text-center text-sm font-medium ${status.includes("✅")
+          className={`mt-5 text-center text-sm font-medium ${
+            status.includes("✅")
               ? "text-green-600"
               : status.includes("⚠️")
-                ? "text-yellow-500"
-                : status.includes("❌")
-                  ? "text-red-600"
-                  : "text-blue-600"
-            }`}
+              ? "text-yellow-500"
+              : status.includes("❌")
+              ? "text-red-600"
+              : "text-blue-600"
+          }`}
         >
           {status}
         </motion.p>

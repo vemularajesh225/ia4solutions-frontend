@@ -1,5 +1,4 @@
 // src/components/RegistrationForm.jsx
-import { API_BASE_URL } from "../config"; // adjust path if needed
 import { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -10,6 +9,11 @@ import {
   FaGraduationCap,
   FaCommentDots,
 } from "react-icons/fa";
+import emailjs from "@emailjs/browser";
+
+const SERVICE_ID = "service_5bee66f";
+const TEMPLATE_ID = "template_i3qw54j";
+const PUBLIC_KEY = "5CjlwRVD1_PiEUBil";
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -32,34 +36,36 @@ const RegistrationForm = () => {
     setStatus("Submitting...");
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+      await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
+          name: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          course: formData.course,
+          qualification: formData.qualification,
+          message: formData.message,
+          title: "New Registration",
+        },
+        PUBLIC_KEY
+      );
+
+      setStatus("✅ Registration submitted successfully!");
+      setSubmitted(true);
+      setFormData({
+        fullName: "",
+        email: "",
+        phone: "",
+        course: "",
+        qualification: "",
+        message: "",
       });
-
-
-      const data = await response.json();
-      if (data.success) {
-        setStatus("✅ Registration submitted successfully!");
-        setSubmitted(true);
-        setTimeout(() => setSubmitted(false), 4000);
-      } else {
-        setStatus("❌ Failed to submit registration.");
-      }
+      setTimeout(() => setSubmitted(false), 4000);
     } catch (error) {
       console.error(error);
-      setStatus("⚠️ Error submitting registration.");
+      setStatus("⚠️ Failed to send registration email. Please try again.");
     }
-
-    setFormData({
-      fullName: "",
-      email: "",
-      phone: "",
-      course: "",
-      qualification: "",
-      message: "",
-    });
   };
 
   const inputFields = [
@@ -88,9 +94,9 @@ const RegistrationForm = () => {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.1 * idx }}
-            className="relative group"
+            className="relative"
           >
-            <span className="absolute left-3 top-4 text-blue-600 dark:text-blue-300 text-lg transition-transform group-focus-within:scale-110">
+            <span className="absolute left-3 top-3 text-blue-600 dark:text-blue-300 text-lg">
               {field.icon}
             </span>
             <input
@@ -98,24 +104,21 @@ const RegistrationForm = () => {
               name={field.name}
               value={formData[field.name]}
               onChange={handleChange}
-              placeholder=" "
+              placeholder={field.placeholder}
               required
-              className="peer w-full bg-transparent border-b-2 border-gray-300 dark:border-gray-600 focus:border-blue-600 pl-10 p-3 pt-5 rounded-md outline-none transition-all duration-300 text-gray-800 dark:text-gray-100 placeholder-transparent"
+              className="w-full bg-transparent border-2 border-gray-300 dark:border-gray-600 focus:border-gradient-to-r focus:from-blue-500 focus:via-indigo-500 focus:to-purple-500 pl-10 py-3 rounded-xl outline-none transition-all duration-300 text-gray-800 dark:text-gray-100"
             />
-            <label className="absolute left-10 top-2 text-gray-500 dark:text-gray-400 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-blue-600 peer-focus:text-sm">
-              {field.placeholder}
-            </label>
           </motion.div>
         ))}
 
-        {/* Message Field */}
+        {/* Message */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.6 }}
-          className="relative group"
+          className="relative"
         >
-          <span className="absolute left-3 top-4 text-blue-600 dark:text-blue-300 text-lg">
+          <span className="absolute left-3 top-3 text-blue-600 dark:text-blue-300 text-lg">
             <FaCommentDots />
           </span>
           <textarea
@@ -123,15 +126,11 @@ const RegistrationForm = () => {
             rows={4}
             value={formData.message}
             onChange={handleChange}
-            placeholder=" "
-            className="peer w-full bg-transparent border-b-2 border-gray-300 dark:border-gray-600 focus:border-blue-600 pl-10 p-3 pt-5 rounded-md outline-none resize-none transition-all duration-300 text-gray-800 dark:text-gray-100 placeholder-transparent"
+            placeholder="Message (Optional)"
+            className="w-full bg-transparent border-2 border-gray-300 dark:border-gray-600 focus:border-gradient-to-r focus:from-blue-500 focus:via-indigo-500 focus:to-purple-500 pl-10 py-3 rounded-xl outline-none resize-none transition-all duration-300 text-gray-800 dark:text-gray-100"
           />
-          <label className="absolute left-10 top-2 text-gray-500 dark:text-gray-400 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-blue-600 peer-focus:text-sm">
-            Message (Optional)
-          </label>
         </motion.div>
 
-        {/* Submit Button */}
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.97 }}
@@ -143,19 +142,19 @@ const RegistrationForm = () => {
         </motion.button>
       </form>
 
-      {/* Status */}
       {status && (
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className={`mt-5 text-center font-semibold ${status.includes("✅")
-            ? "text-green-600 dark:text-green-400"
-            : status.includes("⚠️")
+          className={`mt-5 text-center font-semibold ${
+            status.includes("✅")
+              ? "text-green-600 dark:text-green-400"
+              : status.includes("⚠️")
               ? "text-yellow-600 dark:text-yellow-400"
               : status.includes("❌")
-                ? "text-red-600 dark:text-red-400"
-                : "text-blue-600 dark:text-blue-400"
-            }`}
+              ? "text-red-600 dark:text-red-400"
+              : "text-blue-600 dark:text-blue-400"
+          }`}
         >
           {status}
         </motion.p>
