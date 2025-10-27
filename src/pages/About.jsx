@@ -245,8 +245,8 @@ const About = () => {
           </motion.div>
 
           {/* Timeline */}
-          <div className="relative max-w-6xl mx-auto mt-16 md:mt-20 px-4">
-            {/* Center Vertical Progress Line */}
+          <div className="relative max-w-6xl mx-auto mt-16 md:mt-20 px-4 overflow-hidden">
+            {/* Center Vertical Progress Line (desktop only) */}
             <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full hidden md:block">
               <div className="absolute top-0 w-full h-full bg-gradient-to-b from-blue-400 via-indigo-500 to-purple-500 rounded-full opacity-60 shadow-inner"></div>
             </div>
@@ -291,15 +291,16 @@ const About = () => {
                       </div>
                     </div>
 
-                    {/* Mobile Connector Line */}
-                    {i < journey.length - 1 && (
-                      <div className="md:hidden absolute left-1/2 -translate-x-1/2 top-14 w-0.5 h-full mt-2 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                    )}
+                    {/* Mobile Connector Line - removed for clean mobile view */}
+                    {/* {i < journey.length - 1 && (
+            <div className="md:hidden absolute left-1/2 -translate-x-1/2 top-14 w-0.5 h-full mt-2 bg-gray-200 dark:bg-gray-700 rounded"></div>
+          )} */}
                   </motion.div>
                 );
               })}
             </div>
           </div>
+
 
 
           {/* CTA Button */}

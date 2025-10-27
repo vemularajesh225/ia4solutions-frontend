@@ -140,12 +140,23 @@ const Placements = () => {
       >
         <a
           href="/contact"
-          className="inline-flex items-center gap-3 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-600 text-white px-10 py-4 rounded-full shadow-xl text-lg font-semibold hover:scale-105 hover:shadow-2xl transition-all duration-300"
+          className="inline-flex items-center gap-3 
+               bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-600 
+               text-white 
+               px-6 sm:px-8 md:px-10 
+               py-3 sm:py-3 md:py-4 
+               rounded-full 
+               shadow-xl 
+               text-base sm:text-lg md:text-lg 
+               font-semibold 
+               hover:scale-105 hover:shadow-2xl 
+               transition-all duration-300"
         >
-          Join IA4Solutions & Get Placed
-          <HiArrowNarrowRight className="w-6 h-6 animate-bounce" />
+          Join ia4solutions & Get Placed
+          <HiArrowNarrowRight className="w-5 sm:w-5 md:w-6 h-5 sm:h-5 md:h-6 animate-bounce" />
         </a>
       </motion.div>
+
     </div>
   );
 };
