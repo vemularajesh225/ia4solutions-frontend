@@ -245,7 +245,7 @@ const About = () => {
           </motion.div>
 
           {/* Timeline */}
-          <div className="relative max-w-6xl mx-auto mt-16 md:mt-20 px-4 overflow-hidden">
+          <div className="relative max-w-6xl mx-auto mt-16 md:mt-20 px-4 overflow-visible">
             {/* Center Vertical Progress Line (desktop only) */}
             <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full hidden md:block">
               <div className="absolute top-0 w-full h-full bg-gradient-to-b from-blue-400 via-indigo-500 to-purple-500 rounded-full opacity-60 shadow-inner"></div>
