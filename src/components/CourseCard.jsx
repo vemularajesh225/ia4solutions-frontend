@@ -62,12 +62,14 @@ const CourseCard = ({ title = "Course", icon, description, index = 0 }) => {
       {/* Button */}
       <Link
         to="/register"
+        state={{ selectedCourse: title }}
         className={`relative inline-block px-6 py-2.5 rounded-lg font-semibold text-white text-sm md:text-base
-                    bg-gradient-to-r ${colors.from} ${colors.to}
-                    hover:opacity-90 shadow-md hover:shadow-lg transition-all duration-300`}
+              bg-gradient-to-r ${colors.from} ${colors.to}
+              hover:opacity-90 shadow-md hover:shadow-lg transition-all duration-300`}
       >
         View More
       </Link>
+
     </motion.div>
   );
 };

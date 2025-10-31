@@ -10,7 +10,7 @@ import {
 } from "react-icons/fa";
 import emailjs from "@emailjs/browser"; // install via npm i @emailjs/browser
 
-const SERVICE_ID = "service_5bee66f";      // your EmailJS service ID
+const SERVICE_ID = "service_3ifr6k9";      // your EmailJS service ID
 const TEMPLATE_ID = "template_149eqb8";    // your EmailJS template ID
 const PUBLIC_KEY = "5CjlwRVD1_PiEUBil";      // your EmailJS public key
 

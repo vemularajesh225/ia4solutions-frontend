@@ -1,4 +1,5 @@
 // src/pages/Register.jsx
+import { useLocation } from "react-router-dom";
 import RegistrationForm from "../components/RegistrationForm";
 import { motion } from "framer-motion";
 import { FaCheckCircle, FaLaptopCode, FaUsers, FaGraduationCap } from "react-icons/fa";
@@ -10,6 +11,8 @@ const Register = () => {
     { icon: <FaUsers />, title: "Global Network", desc: "Connect with professionals and peers across industries." },
     { icon: <FaCheckCircle />, title: "Certifications & Placement", desc: "Get recognized and advance in your career." },
   ];
+  const location = useLocation();
+  const selectedCourse = location.state?.selectedCourse || "";
 
   return (
     <div className="relative py-24 px-6 bg-gradient-to-b from-blue-50 via-white to-blue-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-800 overflow-hidden transition-colors duration-500">
@@ -36,7 +39,8 @@ const Register = () => {
           transition={{ duration: 0.8 }}
           className="z-10"
         >
-          <RegistrationForm />
+          <RegistrationForm selectedCourse={selectedCourse} />
+
         </motion.div>
 
         {/* Right: Info / Highlights */}
@@ -99,7 +103,7 @@ const Register = () => {
             transition={{ duration: 0.7 }}
             className="mt-6 text-gray-600 dark:text-gray-400 text-sm"
           >
-            By registering, you agree to receive updates about <b>courses, workshops, services, and placements</b> from 
+            By registering, you agree to receive updates about <b>courses, workshops, services, and placements</b> from
             <b> Innovative Academy for IT Solutions</b>. Please review our{" "}
             <a href="/register" className="text-blue-600 dark:text-blue-400 hover:underline">Privacy Policy</a> and{" "}
             <a href="/register" className="text-blue-600 dark:text-blue-400 hover:underline">Terms of Service</a>.

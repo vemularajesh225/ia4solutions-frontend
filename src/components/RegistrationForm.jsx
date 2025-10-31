@@ -1,5 +1,4 @@
-// src/components/RegistrationForm.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   FaUser,
@@ -10,17 +9,23 @@ import {
   FaCommentDots,
 } from "react-icons/fa";
 import emailjs from "@emailjs/browser";
+import { useLocation } from "react-router-dom";
+import brochureLinks from "../data/brochures"; // ✅ Import your Google Drive links
 
-const SERVICE_ID = "service_5bee66f";
+// ✅ EmailJS credentials
+const SERVICE_ID = "service_3ifr6k9";
 const TEMPLATE_ID = "template_i3qw54j";
 const PUBLIC_KEY = "5CjlwRVD1_PiEUBil";
 
 const RegistrationForm = () => {
+  const location = useLocation();
+  const selectedCourse = location.state?.selectedCourse || "";
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     phone: "",
-    course: "",
+    course: selectedCourse,
     qualification: "",
     message: "",
   });
@@ -28,14 +33,24 @@ const RegistrationForm = () => {
   const [status, setStatus] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
+  // ✅ Update course if selected from previous page
+  useEffect(() => {
+    if (selectedCourse) {
+      setFormData((prev) => ({ ...prev, course: selectedCourse }));
+    }
+  }, [selectedCourse]);
+
+  // ✅ Handle Input Change
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
+  // ✅ Handle Form Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("Submitting...");
 
     try {
+      // ✅ Send Email using EmailJS
       await emailjs.send(
         SERVICE_ID,
         TEMPLATE_ID,
@@ -51,29 +66,91 @@ const RegistrationForm = () => {
         PUBLIC_KEY
       );
 
+      // ✅ Normalize course names for matching
+      const nameMap = {
+        "full stack development": "Web Development",
+        python: "Python Full Stack",
+        java: "Java Full Stack",
+        "html, css, js, react": "Web Development",
+        "php, wordpress": "Web Development",
+        "data analytics": "Data Analytics",
+        "data science": "Data Science",
+        "digital marketing": "Digital Marketing",
+        "power bi": "Data Analytics",
+        "c / c++ programming": "Common",
+        "networking & infrastructure management": "Common",
+        "hr training & office automation": "Common",
+        "testing & automation": "Common",
+        "ai & ml": "Common",
+        sap: "Common",
+        "microsoft dynamics": "Common",
+        autocad: "Common",
+        "embedded systems & vlsi": "Common",
+      };
+
+      const normalizedCourse = formData.course.trim().toLowerCase();
+      const mappedCourse = nameMap[normalizedCourse] || formData.course;
+
+      // ✅ Find matching brochure link
+      const brochureKey =
+        Object.keys(brochureLinks).find(
+          (key) => key.toLowerCase() === mappedCourse.toLowerCase()
+        ) || "Common";
+
+      const brochureLink = brochureLinks[brochureKey];
+
+      if (brochureLink) {
+        // ✅ Open the brochure in new tab
+        window.open(brochureLink, "_blank");
+      } else {
+        console.warn("⚠️ No brochure found for:", formData.course);
+        alert("⚠️ Brochure not found for this course. Please contact support.");
+      }
+
+      // ✅ Success status
       setStatus("✅ Registration submitted successfully!");
       setSubmitted(true);
+
+      // ✅ Reset form after success
       setFormData({
         fullName: "",
         email: "",
         phone: "",
-        course: "",
+        course: selectedCourse,
         qualification: "",
         message: "",
       });
+
+      // ✅ Reset submitted flag
       setTimeout(() => setSubmitted(false), 4000);
     } catch (error) {
-      console.error(error);
+      console.error("EmailJS Error:", error);
       setStatus("⚠️ Failed to send registration email. Please try again.");
     }
   };
 
+  // ✅ Input fields list
   const inputFields = [
-    { name: "fullName", type: "text", placeholder: "Full Name / Company Name", icon: <FaUser /> },
+    {
+      name: "fullName",
+      type: "text",
+      placeholder: "Full Name / Company Name",
+      icon: <FaUser />,
+    },
     { name: "email", type: "email", placeholder: "Email Address", icon: <FaEnvelope /> },
     { name: "phone", type: "text", placeholder: "Phone Number", icon: <FaPhone /> },
-    { name: "course", type: "text", placeholder: "Course / Service Interested", icon: <FaBook /> },
-    { name: "qualification", type: "text", placeholder: "Qualification / Business Domain", icon: <FaGraduationCap /> },
+    {
+      name: "course",
+      type: "text",
+      placeholder: "Course / Service Interested",
+      icon: <FaBook />,
+    },
+    {
+      name: "qualification",
+      type: "text",
+      placeholder: "Qualification / Business Domain",
+      icon: <FaGraduationCap />,
+    },
   ];
 
   return (
@@ -102,16 +179,24 @@ const RegistrationForm = () => {
             <input
               type={field.type}
               name={field.name}
-              value={formData[field.name]}
+              value={
+                field.name === "course"
+                  ? formData.course || selectedCourse
+                  : formData[field.name]
+              }
               onChange={handleChange}
               placeholder={field.placeholder}
               required
-              className="w-full bg-transparent border-2 border-gray-300 dark:border-gray-600 focus:border-gradient-to-r focus:from-blue-500 focus:via-indigo-500 focus:to-purple-500 pl-10 py-3 rounded-xl outline-none transition-all duration-300 text-gray-800 dark:text-gray-100"
+              readOnly={field.name === "course" && !!selectedCourse}
+              className="w-full bg-transparent border-2 border-gray-300 dark:border-gray-600 
+                        focus:border-blue-500 focus:ring-2 focus:ring-blue-300
+                        pl-10 py-3 rounded-xl outline-none transition-all duration-300 
+                        text-gray-800 dark:text-gray-100"
             />
           </motion.div>
         ))}
 
-        {/* Message */}
+        {/* Message Field */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -127,18 +212,24 @@ const RegistrationForm = () => {
             value={formData.message}
             onChange={handleChange}
             placeholder="Message (Optional)"
-            className="w-full bg-transparent border-2 border-gray-300 dark:border-gray-600 focus:border-gradient-to-r focus:from-blue-500 focus:via-indigo-500 focus:to-purple-500 pl-10 py-3 rounded-xl outline-none resize-none transition-all duration-300 text-gray-800 dark:text-gray-100"
+            className="w-full bg-transparent border-2 border-gray-300 dark:border-gray-600 
+                      focus:border-blue-500 focus:ring-2 focus:ring-blue-300
+                      pl-10 py-3 rounded-xl outline-none resize-none transition-all duration-300 
+                      text-gray-800 dark:text-gray-100"
           />
         </motion.div>
 
+        {/* Submit Button */}
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.97 }}
           type="submit"
           disabled={submitted}
-          className="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-blue-400/30 transition-all duration-300"
+          className="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 
+                    text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-blue-400/30 
+                    transition-all duration-300"
         >
-          {submitted ? "Submitted ✅" : "Submit"}
+          {submitted ? "Submitted ✅" : "Submit & Download Brochure"}
         </motion.button>
       </form>
 
@@ -151,8 +242,6 @@ const RegistrationForm = () => {
               ? "text-green-600 dark:text-green-400"
               : status.includes("⚠️")
               ? "text-yellow-600 dark:text-yellow-400"
-              : status.includes("❌")
-              ? "text-red-600 dark:text-red-400"
               : "text-blue-600 dark:text-blue-400"
           }`}
         >

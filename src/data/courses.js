@@ -28,7 +28,11 @@ const courses = [
   // 💼 Career-Oriented & Professional Skills
   { title: "HR Training & Office Automation", icon: <Briefcase />, category: "Professional Skills" },
   { title: "Power BI", icon: <BarChartBig />, category: "Data Analytics" },
-  { title: "Data Analytics & Data Science", icon: <ChartBar />, category: "Data Science" },
+
+  // ✅ Split into two separate courses
+  { title: "Data Analytics", icon: <ChartBar />, category: "Data Analytics" },
+  { title: "Data Science", icon: <Brain />, category: "Data Science" },
+
   { title: "SQL", icon: <Database />, category: "Data Science" },
 
   // 🌐 Web & Marketing Courses
