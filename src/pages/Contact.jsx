@@ -109,7 +109,7 @@ const Contact = () => {
                 },
                 {
                   icon: FaLinkedinIn,
-                  href: "https://www.linkedin.com/in/innovative-academy-it-solutions-00467b335/",
+                  href: "https://www.linkedin.com/company/ia4solutions/",
                   bg: "from-blue-500 to-cyan-500",
                 },
                 {

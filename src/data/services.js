@@ -1,76 +1,76 @@
-import { 
-  FaBriefcase, 
-  FaProjectDiagram, 
-  FaFileInvoice, 
-  FaLightbulb, 
-  FaUsersCog, 
-  FaChalkboard, 
-  FaLaptopCode, 
-  FaHandshake,
+import {
   FaUserGraduate,
-  FaGlobe
+  FaBriefcase,
+  FaProjectDiagram,
+  FaLaptopCode,
+  FaGlobe,
+  FaBullhorn,
+  FaShoppingCart,
+  FaChalkboardTeacher,
+  FaHandshake,
+  FaClipboardList
 } from "react-icons/fa";
 
 const services = [
   {
-    title: "Placement Support for Freshers and Experienced Candidates",
+    title: "Placement Training & Assistance",
     icon: <FaUserGraduate />,
-    description: "Dedicated placement assistance, job alerts, and career guidance for both freshers and experienced professionals.",
+    description: "Comprehensive placement training for both freshers and experienced candidates, including resume making, screening tests, technical and HR rounds, soft skills, and communication development.",
     gradient: "from-emerald-500 to-lime-500",
   },
   {
     title: "Internships & Certifications",
     icon: <FaBriefcase />,
-    description: "Hands-on corporate training programs with globally recognized certifications.",
+    description: "Gain hands-on industrial experience with professional certifications and real-time project exposure.",
     gradient: "from-blue-500 to-cyan-500",
   },
   {
     title: "Academic & Final-Year Projects",
     icon: <FaProjectDiagram />,
-    description: "Guidance on innovative projects with practical, industry-relevant applications.",
+    description: "Guidance and support for academic and industry-oriented final-year projects using the latest technologies.",
     gradient: "from-indigo-500 to-purple-500",
   },
   {
     title: "IT Training & Certification",
     icon: <FaLaptopCode />,
-    description: "Expert guidance for coding, technical interviews, and IT certifications.",
+    description: "Specialized training in software development, data analytics, and IT certifications to enhance your technical expertise.",
     gradient: "from-pink-500 to-rose-500",
   },
   {
     title: "Website Design & Development",
     icon: <FaGlobe />,
-    description: "Custom website design and development solutions for institutes, startups, and businesses.",
+    description: "Professional website design and full-stack development solutions tailored for businesses and institutions.",
     gradient: "from-sky-400 to-blue-600",
   },
   {
-    title: "Resume & LinkedIn Optimization",
-    icon: <FaFileInvoice />,
-    description: "ATS-friendly resume building and LinkedIn branding for maximum visibility.",
+    title: "Digital Marketing",
+    icon: <FaBullhorn />,
+    description: "Master digital marketing strategies including SEO, social media campaigns, and content marketing for business growth.",
     gradient: "from-yellow-400 to-orange-500",
   },
   {
-    title: "Interview Preparation & Mock Rounds",
-    icon: <FaUsersCog />,
-    description: "Practice technical, HR, and group discussion sessions with expert feedback.",
-    gradient: "from-red-400 to-rose-500",
-  },
-  {
-    title: "Technical & HR Interview Strategies",
-    icon: <FaHandshake />,
-    description: "Learn strategies to impress HR managers, recruiters, and technical leads.",
-    gradient: "from-fuchsia-500 to-purple-700",
-  },
-  {
-    title: "Aptitude & Logical Reasoning",
-    icon: <FaLightbulb />,
-    description: "Sharpen analytical thinking, problem-solving, and reasoning skills.",
+    title: "E-Commerce Development",
+    icon: <FaShoppingCart />,
+    description: "Design and build powerful e-commerce platforms with secure payment integration and scalable architecture.",
     gradient: "from-teal-400 to-cyan-600",
   },
   {
-    title: "Soft Skills & Communication",
-    icon: <FaChalkboard />,
-    description: "Improve confidence, presentation skills, and professional workplace etiquette.",
+    title: "Campus Recruitment Training",
+    icon: <FaChalkboardTeacher />,
+    description: "Intensive campus recruitment preparation covering aptitude, technical tests, communication skills, and mock interviews.",
     gradient: "from-green-400 to-lime-500",
+  },
+  {
+    title: "Corporate Collaboration & Industry Connect",
+    icon: <FaHandshake />,
+    description: "Collaborate with top companies for internships, live projects, and placement drives to boost employability.",
+    gradient: "from-fuchsia-500 to-purple-700",
+  },
+  {
+    title: "Career Assessment & Guidance",
+    icon: <FaClipboardList />,
+    description: "Get expert career counseling, skill assessment, and personalized growth strategies to achieve your goals.",
+    gradient: "from-rose-500 to-red-600",
   },
 ];
 
